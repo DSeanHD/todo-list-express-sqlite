@@ -1,0 +1,131 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 10%;
+    font-size: 15px;
+}
+
+body {
+    background-color: #f4f4f9;
+}
+
+#main-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;    /* Align items horizontally */
+    gap: 10px;              /* Add spacing between elements */
+    margin-top: 20px;
+}
+
+#input-container {
+    width: 100%; /* Match the width of the todo list */
+    max-width: 600px; /* Add a max width for better responsiveness */
+    margin: 0 auto 20px auto; /* Center and add bottom margin */
+    display: flex;
+    gap: 10px; /* Space between the input and button */
+}
+
+#todo-input {
+    flex-grow: 1;
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#todo-area {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%; /* Match the width of the input container */
+    max-width: 600px; /* Keep consistency with the input */
+    margin: 0 auto; /* Center the list */
+}
+
+#todo-area > * {
+    margin-bottom: 20px;
+}
+
+#add-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+#add-btn:hover {
+    background-color: #0056b3;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.todo-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Labels */
+.todo-item label {
+    flex-grow: 1;
+    font-size: 18px;
+    color: #333;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* Buttons */
+.todo-item button {
+    margin-left: 10px;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.todo-item button:hover {
+    opacity: 0.8;
+}
+
+/* Edit button */
+.todo-item button[title="Edit"] {
+    background-color: #28a745;
+}
+
+/* Delete button */
+.todo-item button[title="Delete"] {
+    background-color: #dc3545;
+}
+
+/* Checkboxes */
+.todo-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
