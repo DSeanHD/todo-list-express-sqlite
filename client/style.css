@@ -70,6 +70,19 @@ body {
     background-color: #0056b3;
 }
 
+#popup {
+    position: fixed;
+    bottom: -50px; /* Initially hidden */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: bottom 0.5s ease-in-out;
+}
+
 .todo-item {
     display: flex;
     align-items: center;

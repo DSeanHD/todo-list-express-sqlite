@@ -1,13 +1,24 @@
 const todoInput = document.getElementById("todo-input");
 const todoArea = document.getElementById("todo-area");
 const addBtn = document.getElementById("add-btn");
+const popup = document.getElementById("popup");
+
+const showPopup = (message, color) => {
+    popup.textContent = message;
+    popup.style.backgroundColor = color;
+    popup.style.bottom = "20px"; // Slide up the popup
+
+    setTimeout(() => {
+        popup.style.bottom = "-50px"; // Hide after 3 seconds
+    }, 3000);
+};
 
 const addItem = async () => {
     if (todoInput.value === "") {
         return null;
     }
 
-    await fetch("http://localhost:4000/api", {
+    const response = await fetch("http://localhost:4000/api", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -15,7 +26,12 @@ const addItem = async () => {
         body: JSON.stringify({ todo_item: todoInput.value })
     });
 
-    location.reload();
+    if (response.ok) {
+        showPopup("Item added", "green"); // Show success message
+        todoInput.value = ""; // Clear input field
+        todoArea.innerHTML = ""; // Clear existing list
+        renderList(); // Fetch updated list
+    }
 }
 
 const editItem = async (id, defaultItem) => {
@@ -25,7 +41,7 @@ const editItem = async (id, defaultItem) => {
         return null;
     }
 
-    await fetch("http://localhost:4000/api", {
+    const response = await fetch("http://localhost:4000/api", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -33,11 +49,17 @@ const editItem = async (id, defaultItem) => {
         body: JSON.stringify({ id, newItem })
     });
 
-    location.reload();
+    if (response.ok) {
+        showPopup("Item edited", "yellow");
+        todoInput.value = "";
+        todoArea.innerHTML = "";
+        renderList();
+    }
 }
 
 const deleteItem = async (id) => {
     console.log(id);
+
     const res = await fetch("http://localhost:4000/api", {
         method: "DELETE",
         headers: {
@@ -48,7 +70,9 @@ const deleteItem = async (id) => {
 
     if (res.ok) {
         console.log(`Item with ID ${id} deleted successfully`);
-        location.reload();
+        showPopup("Item deleted!", "red");
+        todoArea.innerHTML = "";
+        renderList();
     } else {
         const errorText = await res.text();
         console.error(`Failed to delete item with ID ${id}: ${errorText}`);
@@ -56,7 +80,7 @@ const deleteItem = async (id) => {
 }
 
 const toggleCheckbox = async (id, isChecked) => {
-    await fetch("http://localhost:4000/api/toggle", {
+    const res = await fetch("http://localhost:4000/api/toggle", {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -64,7 +88,10 @@ const toggleCheckbox = async (id, isChecked) => {
         body: JSON.stringify({ id, isChecked: !isChecked }) // Toggle the current state
     });
 
-    location.reload();
+    if (res.ok) {
+        todoArea.innerHTML = "";
+        renderList();
+    }
 }
 
 const renderList = async () => {
